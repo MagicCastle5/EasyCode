@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EasyCode Web IDE</title>
+  <link rel="icon" href="easycode.ico" type="image/x-icon">
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #007acc;
+      padding: 10px;
+      color: white;
+      text-align: center;
+      font-size: 1.2em;
+    }
+    textarea, #console {
+      width: 90%;
+      margin: 20px auto;
+      display: block;
+      background: #252526;
+      color: #d4d4d4;
+      border: none;
+      padding: 10px;
+      font-size: 14px;
+      font-family: 'Courier New', monospace;
+    }
+    textarea {
+      height: 250px;
+    }
+    #console {
+      height: 150px;
+      overflow-y: auto;
+    }
+    button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      background-color: #007acc;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <header>EasyCode Web IDE</header>
+  <textarea id="editor">Make x = 3
+When x > 2
+    Show -x is greater than 2-</textarea>
+  <button onclick="runEasyCode()">Run EasyCode</button>
+  <pre id="console"></pre>
+
+  <script>
+    function runEasyCode() {
+      const editor = document.getElementById("editor").value.split(/\n/);
+      const consoleOut = document.getElementById("console");
+      let variables = {};
+      let functions = {};
+      let i = 0;
+      let output = "";
+
+      function log(msg) {
+        output += msg + "\n";
+      }
+
+      function evalCondition(cond) {
+        try {
+          cond = cond.replace(/<>/g, "!=").replace(/&/g, "&&").replace(/\|/g, "||").replace(/~/g, "!");
+          for (let v in variables) {
+            cond = cond.replaceAll(v, JSON.stringify(variables[v]));
+          }
+          return eval(cond);
+        } catch (e) {
+          log(`Condition error: ${cond}`);
+          return false;
+        }
+      }
+
+      function interpret(lines) {
+        let idx = 0;
+        while (idx < lines.length) {
+          let line = lines[idx].trim();
+          if (!line || line.startsWith("*")) {
+            idx++;
+            continue;
+          }
+
+          if (line.startsWith("Show ")) {
+            let val = line.slice(5).trim();
+            if (val.startsWith("-") && val.endsWith("-")) {
+              log(val.slice(1, -1));
+            } else {
+              log(variables[val] ?? `Error: ${val} not defined`);
+            }
+          } else if (line.startsWith("Make ")) {
+            const [, name, expr] = line.match(/Make (\w+)\s*=\s*(.+)/) || [];
+            if (name) {
+              let jsExpr = expr.replace(/<>/g, "!=").replace(/&/g, "&&").replace(/\|/g, "||").replace(/~/g, "!").replace(/Long\((\w+)\)/g, '($1.length)');
+              for (let v in variables) {
+                jsExpr = jsExpr.replaceAll(v, JSON.stringify(variables[v]));
+              }
+              try {
+                variables[name] = eval(jsExpr);
+              } catch {
+                log(`Eval error: ${expr}`);
+              }
+            }
+          } else if (line.startsWith("When ")) {
+            const cond = line.slice(5).trim();
+            let block = [];
+            idx++;
+            while (idx < lines.length && lines[idx].startsWith("    ")) {
+              block.push(lines[idx].slice(4));
+              idx++;
+            }
+            if (evalCondition(cond)) interpret(block);
+            continue;
+          } else {
+            log(`Syntax error: ${line}`);
+          }
+          idx++;
+        }
+      }
+
+      interpret(editor);
+      consoleOut.textContent = output;
+    }
+  </script>
+</body>
+</html>

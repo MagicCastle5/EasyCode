@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EasyCode Beginner's Guide</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #569CD6;
+        }
+        code {
+            background: #252526;
+            color: #CE9178;
+            display: block;
+            padding: 10px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            border-radius: 5px;
+        }
+        a {
+            color: #4FC3F7;
+        }
+        ul li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>EasyCode: Beginner's Guide</h1>
+
+    <h2>Syntax Basics</h2>
+    <p><strong>Comments</strong></p>
+    <code>* This is a comment</code>
+
+    <p><strong>Variables</strong></p>
+    <code>Make x = 5
+Make name = 'Alice'
+Make total = x + 10
+Make len = Long(name)</code>
+
+    <p><strong>Output</strong></p>
+    <code>Show -Hello world!-
+Show x</code>
+
+    <h2>Logic</h2>
+    <p><strong>If Statement</strong></p>
+    <code>When x > 3
+    Show -x is bigger than 3-</code>
+
+    <p><strong>While Loop</strong></p>
+    <code>Make i = 0
+While i < 5
+    Show i
+    Make i = i + 1</code>
+
+    <h2>Functions</h2>
+    <p><strong>Define a Function</strong></p>
+    <code>Function Greet(name)
+    Show -Hello -
+    Show name
+End</code>
+
+    <p><strong>Call a Function</strong></p>
+    <code>Start Greet('Alice')</code>
+
+    <h2>Expressions & Logic</h2>
+    <ul>
+        <li><code>&lt;&gt;</code> means not equal (<code>!=</code>)</li>
+        <li><code>&</code> means and</li>
+        <li><code>|</code> means or</li>
+        <li><code>~</code> means not</li>
+        <li><code>Long(x)</code> gives length of x</li>
+    </ul>
+
+    <h2>Sample Program</h2>
+    <code>Make name = 'Bob'
+
+Function Welcome(n)
+    Show -Welcome -
+    Show n
+End
+
+Start Welcome(name)
+
+Make i = 0
+While i < 3
+    Show -Looping...-
+    Make i = i + 1</code>
+
+    <h2>Tips</h2>
+    <ul>
+        <li>Indent blocks with 4 spaces</li>
+        <li>Use <code>-text-</code> for string display</li>
+        <li>Variable names are case-sensitive</li>
+        <li>Use only defined variables to avoid errors</li>
+    </ul>
+
+    <h2>Try EasyCode Online!</h2>
+    <p>
+        Run your EasyCode programs live in your browser:  
+        <a href="https://your-username.github.io/easycode-web/" target="_blank">
+            Launch EasyCode Web App
+        </a>
+    </p>
+</body>
+</html>
