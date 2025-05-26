@@ -7,8 +7,7 @@
 Run and test EasyCode programs right in your browser! 🖥️✨  
 This lightweight IDE supports custom syntax, variables, functions, loops, and more.
 
-👉 **Live Demo:** [Launch the App](https://your-username.github.io/easycode-web/)  
-*(Replace with your actual GitHub Pages link)*
+👉 **Live Demo:** [Launch the App](https://magiccastle5.github.io/EasyCode/)  
 
 ---
 
